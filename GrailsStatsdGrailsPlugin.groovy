@@ -1,11 +1,12 @@
 import grails.plugin.statsd.StatsdPoolFactory
-import org.apache.commons.pool.impl.GenericObjectPool
+import org.apache.commons.pool2.impl.GenericObjectPool
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 
 class GrailsStatsdGrailsPlugin {
     // the plugin version
-    def version = "0.2"
+    def version = "0.3-RUMBLE"
     // the version or versions of Grails the plugin is designed for
-    def grailsVersion = "2.0 > *"
+    def grailsVersion = "2.4.4 > *"
     // the other plugins this plugin depends on
     def dependsOn = [:]
     // resources that are excluded from plugin packaging
@@ -41,7 +42,7 @@ The statsd plugin provides integration with the statsd server and can be used to
     def doWithSpring = {
 
         def statsdConfigMap = application.config.grails.statsd ?: [:]
-        statsdPoolConfig(GenericObjectPool.Config) {
+        statsdPoolConfig(GenericObjectPoolConfig) {
             // used to set arbitrary config values without calling all of them out here or requiring any of them
             // any property that can be set on GenericObjectPool.Config can be set here
             statsdConfigMap.poolConfig.each { key, value ->

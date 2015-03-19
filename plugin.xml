@@ -1,0 +1,13 @@
+<plugin name='grails-statsd' version='0.3-RUMBLE' grailsVersion='2.4.4 &gt; *'>
+  <author>Charlie Knudsen</author>
+  <authorEmail>charlie.knudsen@gmail.com</authorEmail>
+  <title>Grails Statsd Plugin</title>
+  <description>The statsd plugin provides integration with the statsd server and can be used to publish application metrics and activity.
+</description>
+  <documentation>https://github.com/charliek/grails-statsd</documentation>
+  <type>GrailsStatsdGrailsPlugin</type>
+  <resources>
+    <resource>grails.plugin.statsd.StatsdService</resource>
+    <resource>grails.plugin.statsd.StatsdTimingService</resource>
+  </resources>
+</plugin>
