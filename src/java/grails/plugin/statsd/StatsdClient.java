@@ -46,14 +46,21 @@ public class StatsdClient {
 
     private InetSocketAddress _address;
     private DatagramChannel _channel;
+    private String _prefix;
 
-    public StatsdClient(String host, int port) throws UnknownHostException, IOException {
-        this(InetAddress.getByName(host), port);
+    public StatsdClient(String host, int port, String prefix) throws UnknownHostException, IOException {
+        this(InetAddress.getByName(host), port, prefix);
     }
 
-    public StatsdClient(InetAddress host, int port) throws IOException {
+    public StatsdClient(InetAddress host, int port, String prefix) throws IOException {
         _address = new InetSocketAddress(host, port);
         _channel = DatagramChannel.open();
+        // Append '.' to the end of the prefix if it's not empty and doesn't have it
+        if (!prefix.isEmpty() && prefix.lastIndexOf('.') != prefix.length() - 1) {
+            _prefix = prefix + '.';
+        } else {
+            _prefix = prefix;
+        }
     }
 
     protected boolean isOpen() {
@@ -70,7 +77,7 @@ public class StatsdClient {
         if (sampleRate < 1.0) {
             for (String stat : stats) {
                 if (RNG.nextDouble() <= sampleRate) {
-                    stat = String.format("%s|@%f", stat, sampleRate);
+                    stat = String.format("%s%s|@%f", _prefix, stat, sampleRate);
                     if (doSend(stat)) {
                         retval = true;
                     }
@@ -78,6 +85,8 @@ public class StatsdClient {
             }
         } else {
             for (String stat : stats) {
+                stat = String.format("%s%s", _prefix, stat);
+
                 if (doSend(stat)) {
                     retval = true;
                 }
@@ -97,7 +106,7 @@ public class StatsdClient {
                 return true;
             } else {
                 log.error(String.format(
-                        "Could not send entirely stat %s to host %s:%d. Only sent %i bytes out of %i bytes", stat,
+                        "Could not send entirely stat %s%s to host %s:%d. Only sent %i bytes out of %i bytes", _prefix, stat,
                         _address.getHostName(), _address.getPort(), nbSentBytes, data.length));
                 return false;
             }
@@ -105,7 +114,7 @@ public class StatsdClient {
         } catch (IOException e) {
             System.out.println(e.getMessage());
             log.error(
-                    String.format("Could not send stat %s to host %s:%d", stat, _address.getHostName(),
+                    String.format("Could not send stat %s%s to host %s:%d", _prefix, stat, _address.getHostName(),
                             _address.getPort()), e);
             return false;
         }

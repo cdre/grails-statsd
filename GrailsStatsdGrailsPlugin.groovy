@@ -4,7 +4,7 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 
 class GrailsStatsdGrailsPlugin {
     // the plugin version
-    def version = "0.3-RUMBLE"
+    def version = "0.4-RUMBLE"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.4.4 > *"
     // the other plugins this plugin depends on
@@ -32,8 +32,8 @@ The statsd plugin provides integration with the statsd server and can be used to
 //    def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMYPLUGIN" ]
 
     // Online location of the plugin's browseable source code.
-    def scm = [ url: "https://github.com/charliek/grails-statsd" ]
-    def documentation = "https://github.com/charliek/grails-statsd"
+    def scm = [ url: "https://github.com/cdre/grails-statsd" ]
+    def documentation = "https://github.com/cdre/grails-statsd"
 
     def doWithWebDescriptor = { xml ->
         // Additions to web.xml (optional), this event occurs before
@@ -44,7 +44,7 @@ The statsd plugin provides integration with the statsd server and can be used to
         def statsdConfigMap = application.config.grails.statsd ?: [:]
         statsdPoolConfig(GenericObjectPoolConfig) {
             // used to set arbitrary config values without calling all of them out here or requiring any of them
-            // any property that can be set on GenericObjectPool.Config can be set here
+            // any property that can be set on GenericObjectPoolConfig can be set here
             statsdConfigMap.poolConfig.each { key, value ->
                 delegate.setProperty(key, value)
             }
@@ -52,15 +52,16 @@ The statsd plugin provides integration with the statsd server and can be used to
 
         def host = statsdConfigMap.host ?: 'localhost'
         def port = statsdConfigMap.port ?: 8125
+        def prefix = statsdConfigMap.prefix ?: ''
 
-        log.info("Setting up statsd for ${host}:${port}")
-        println "Setting up statsd for ${host}:${port}"
+        log.info("Setting up statsd for ${host}:${port} with ${prefix} prefix")
+        println "Setting up statsd for ${host}:${port} with ${prefix} prefix"
 
-        statsdPoolFactory(StatsdPoolFactory, host, port)
+
+        statsdPoolFactory(StatsdPoolFactory, host, port, prefix)
         statsdPool(GenericObjectPool, ref('statsdPoolFactory'), ref('statsdPoolConfig')) {
             //bean.destroyMethod = 'close'
         }
-
     }
 
     def doWithDynamicMethods = { ctx ->

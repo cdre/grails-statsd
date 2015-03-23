@@ -5,7 +5,7 @@ import grails.test.mixin.*
 import org.junit.Test
 import org.junit.Before
 import org.gmock.GMockTestCase
-import org.apache.commons.pool.ObjectPool
+import org.apache.commons.pool2.ObjectPool
 
 @TestFor(StatsdService)
 class StatsdServiceTests extends GMockTestCase {

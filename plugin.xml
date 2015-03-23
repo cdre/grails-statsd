@@ -1,4 +1,4 @@
-<plugin name='grails-statsd' version='0.3-RUMBLE' grailsVersion='2.4.4 &gt; *'>
+<plugin name='grails-statsd' version='0.4-RUMBLE' grailsVersion='2.4.4 &gt; *'>
   <author>Charlie Knudsen</author>
   <authorEmail>charlie.knudsen@gmail.com</authorEmail>
   <title>Grails Statsd Plugin</title>
