@@ -1,13 +1,33 @@
-<plugin name='grails-statsd' version='0.4-RUMBLE' grailsVersion='2.4.4 &gt; *'>
+<plugin name='grails-statsd' version='0.5-RUMBLE' grailsVersion='2.0 &gt; *'>
   <author>Charlie Knudsen</author>
   <authorEmail>charlie.knudsen@gmail.com</authorEmail>
   <title>Grails Statsd Plugin</title>
   <description>The statsd plugin provides integration with the statsd server and can be used to publish application metrics and activity.
 </description>
-  <documentation>https://github.com/charliek/grails-statsd</documentation>
+  <documentation>https://github.com/cdre/grails-statsd</documentation>
   <type>GrailsStatsdGrailsPlugin</type>
   <resources>
     <resource>grails.plugin.statsd.StatsdService</resource>
     <resource>grails.plugin.statsd.StatsdTimingService</resource>
   </resources>
+  <repositories>
+    <repository name='grailsCentral' url='http://grails.org/plugins' />
+    <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
+  </repositories>
+  <dependencies>
+    <test>
+      <dependency group='org.hamcrest' name='hamcrest-library' version='1.1' />
+      <dependency group='org.gmock' name='gmock' version='0.8.0' />
+    </test>
+    <compile>
+      <dependency group='org.apache.commons' name='commons-pool2' version='2.0' />
+    </compile>
+  </dependencies>
+  <plugins>
+    <build>
+      <plugin group='org.grails.plugins' name='release' version='2.2.1' />
+    </build>
+  </plugins>
+  <runtimePluginRequirements />
+  <behavior />
 </plugin>

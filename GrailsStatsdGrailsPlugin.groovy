@@ -4,9 +4,9 @@ import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 
 class GrailsStatsdGrailsPlugin {
     // the plugin version
-    def version = "0.4-RUMBLE"
+    def version = "0.5-RUMBLE"
     // the version or versions of Grails the plugin is designed for
-    def grailsVersion = "2.4.4 > *"
+    def grailsVersion = "2.0 > *"
     // the other plugins this plugin depends on
     def dependsOn = [:]
     // resources that are excluded from plugin packaging
