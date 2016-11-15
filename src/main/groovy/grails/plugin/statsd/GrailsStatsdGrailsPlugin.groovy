@@ -1,6 +1,8 @@
-package grails.statsd
+package grails.plugin.statsd
 
 import grails.plugins.*
+import org.apache.commons.pool2.impl.GenericObjectPool
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig
 
 class GrailsStatsdGrailsPlugin extends Plugin {
 
@@ -42,6 +44,27 @@ Brief summary/description of the plugin.
 
     Closure doWithSpring() { {->
             // TODO Implement runtime spring config (optional)
+            def statsdConfigMap = grailsApplication.config.grails.statsd ?: [:]
+            statsdPoolConfig(GenericObjectPoolConfig) {
+                // used to set arbitrary config values without calling all of them out here or requiring any of them
+                // any property that can be set on GenericObjectPoolConfig can be set here
+                statsdConfigMap.poolConfig.each { key, value ->
+                    delegate.setProperty(key, value)
+                }
+            }
+
+            def host = statsdConfigMap.host ?: 'localhost'
+            def port = statsdConfigMap.port ?: 8125
+            def prefix = statsdConfigMap.prefix ?: ''
+
+            log.info("Setting up statsd for ${host}:${port} with ${prefix} prefix")
+            println "Setting up statsd for ${host}:${port} with ${prefix} prefix"
+
+
+            statsdPoolFactory(StatsdPoolFactory, host, port, prefix)
+            statsdPool(GenericObjectPool, ref('statsdPoolFactory'), ref('statsdPoolConfig')) {
+                //bean.destroyMethod = 'close'
+            }
         }
     }
 
