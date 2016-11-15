@@ -1,1 +1,0 @@
-grails test-app && cd test/projects/annotation-test && grails test-app && cd -
