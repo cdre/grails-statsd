@@ -6,6 +6,10 @@ grails:
     spring:
         transactionManagement:
             proxies: false
+    statsd:
+        host: '127.0.0.1'
+        port: 8125
+        prefix: ''
 info:
     app:
         name: '@info.app.name@'
@@ -20,6 +24,7 @@ endpoints:
     enabled: false
     jmx:
         enabled: true
+        unique-names: true
 
 ---
 grails:

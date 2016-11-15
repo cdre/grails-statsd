@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-version "0.1"
+version "0.1.1"
 group "grails.statsd"
 
 apply plugin:"eclipse"
@@ -58,20 +58,20 @@ dependencies {
     testCompile "org.grails.plugins:geb"
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
+
+    compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.0'
 }
 grailsPublish {
-    // TODO: Provide values here
-    user = 'user'
-    key = 'key'
+    user = 'yuenhsi'
+    key = '5bc131c9b5a165adae6159ecd8d0eee0d5017de3'
+    userOrg = 'cdrentertainment'
     githubSlug = 'foo/bar'
     license {
         name = 'Apache-2.0'
     }
-    title = "My Plugin"
-    desc = "Full plugin description"
-    developers = [johndoe:"John Doe"]
-    portalUser = ""
-    portalPassword = ""    
+    title = "grails-statsd"
+    desc = "grails 3 plugin"
+    developers = [platform:"Platform"]
 }
 
 assets {
