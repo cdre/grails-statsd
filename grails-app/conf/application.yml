@@ -6,10 +6,6 @@ grails:
     spring:
         transactionManagement:
             proxies: false
-    statsd:
-        host: '127.0.0.1'
-        port: 8125
-        prefix: ''
 info:
     app:
         name: '@info.app.name@'
@@ -78,6 +74,10 @@ grails:
                 scriptlets: html
                 taglib: none
                 staticparts: none
+    statsd:
+            host: '127.0.0.1'
+            port: 8125
+            prefix: ''
 endpoints:
     jmx:
         unique-names: true
