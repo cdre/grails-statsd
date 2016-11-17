@@ -25,7 +25,7 @@ endpoints:
     jmx:
         enabled: true
         unique-names: true
-
+spring.jmx.enabled: false
 ---
 grails:
     mime:
