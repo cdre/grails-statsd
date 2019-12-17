@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-version "1.0.0"
+version "1.0.1"
 group "grails.statsd"
 
 apply plugin:"eclipse"
@@ -30,6 +30,15 @@ ext {
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
+
+    // Rumble maven repositories
+    maven {
+        credentials {
+            username artifactory_user
+            password artifactory_password
+        }
+        url "http://artifactory.aws.cdrentertainment.com:8081/artifactory/plugins-release-local"
+    }
 }
 
 dependencyManagement {
@@ -61,15 +70,21 @@ dependencies {
 
     compile group: 'org.apache.commons', name: 'commons-pool2', version: '2.0'
 }
-grailsPublish {
-    user = bintrayUser
-    key = bintrayApiKey
-    userOrg = 'rumble'
-    githubSlug = 'cdre/grails-statsd'
-    title = "grails-statsd"
-    desc = "grails 3 plugin"
-    developers = [rumble:"Platform"]
-    repo = 'dist-private'
+
+publishing {
+    repositories {
+        maven {
+            credentials {
+                username artifactory_user
+                password artifactory_password
+            }
+            if (version.endsWith('SNAPSHOT')) {
+                url artifactory_snapshotUrl
+            } else {
+                url artifactory_releaseUrl
+            }
+        }
+    }
 }
 
 assets {
